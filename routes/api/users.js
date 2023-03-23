@@ -49,4 +49,5 @@ app.update('./update', (req,res => {
     console.log(results);
     res.send(
       results.update
-}))
+  )
+});
