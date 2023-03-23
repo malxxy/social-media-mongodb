@@ -8,9 +8,9 @@ mongodb.connect(
 )
 
 // get route
-app.post('/create', (req, res) => {
+app.get('/read', (req, res) => {
     db.users('users'.insertOne(
-        {name: req.body.name, email: req.body.email},
+        {username: req.body.username, email: req.body.email},
         (err, results) => {
             if (err) throw err;
             res.json(results);
@@ -19,7 +19,7 @@ app.post('/create', (req, res) => {
 });
 
 // post route
-    app.post('./read', (req, res) => {
+    app.post('./create', (req, res) => {
         db.users('users')
         .find()
         .toArray((err, results) => {
@@ -41,3 +41,12 @@ app.delete('/delete', (req, res) => {
   });
 
 // update route
+app.update('./update', (req,res => {
+  db.users('users'
+  .updateOne({ "_id" : ObjectId(req.body.id), "username": req.body.username, "email"},
+  (err, results) => {
+    if (err) throw err;
+    console.log(results);
+    res.send(
+      results.update
+}))
