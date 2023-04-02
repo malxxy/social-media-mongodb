@@ -1,0 +1,2 @@
+const { Reaction } = require('../models');
+
