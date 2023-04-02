@@ -1,7 +1,7 @@
 const express = require('express');
 const db = require('./config/connection')
 
-const { Item } = require('./models');
+const { Reaction, Thought, User} = require('./models');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -9,7 +9,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 
-app.get('all-items', (req,res) => {
+app.get('INSERT CORRET', (req,res) => {
     Item.find((err,result) => {
         if (err) {
             res.status(500).send({ message: 'Internal Server Error'});

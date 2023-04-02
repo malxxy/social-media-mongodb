@@ -24,12 +24,9 @@ const { Schema, model } = require('mongoose');
 const reactionSchema = new Schema(
     {
         reactionId: TBD,
-    },
-    {
-        reactionBody: String,
-    },
-    {
-      username: String,
+        reactionBody: {type: String, required: true},
+        username: {type: String, required: true},
+        createdAt: { type:Date, default: Date.now },
     },
     {
       // Mongoose supports two Schema options to transform Objects after querying MongoDb: toJSON and toObject.
@@ -42,6 +39,8 @@ const reactionSchema = new Schema(
   );
 
 // Initialize our Reaction model
-const Reaction = model('reaction', reactionSchema);
+const Reaction = mongoose.model('Reaction', reactionSchema);
+
+const handleError = (err) => console.error(err);
 
 module.exports = Reaction;
