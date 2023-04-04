@@ -1,37 +1,16 @@
 const { Schema, model } = require('mongoose');
-const Tag = require('./Tag');
-
-// reactionID
-// use mongoose objectId data type
-// default value is set to a new ObjectID
-
-// reactionBody
-// string
-// required
-// 280 character maximum
-
-// username
-//s tring
-// required
-
-// createdAt
-// date
-// set default value to current timestamp
-// use getter method to format timestamp on query
-
-// SUBDOCUMENT SCHEMA IN THE THOUGHT MODEL
+const Thought = require('./Thought');
 
 // Schema to create Reaction model
 const reactionSchema = new Schema(
     {
-        reactionId: TBD,
-        reactionBody: {type: String, required: true},
+        reactionId: { type: mongoose.Schema.Types.ObjectId, default: ObjectId },
+        reactionBody: {type: String, required: true, maxLength: 280,},
         username: {type: String, required: true},
         createdAt: { type:Date, default: Date.now },
+        thoughts: [Thought],
     },
     {
-      // Mongoose supports two Schema options to transform Objects after querying MongoDb: toJSON and toObject.
-      // Here we are indicating that we want virtuals to be included with our response, overriding the default behavior
       toJSON: {
         virtuals: true,
       },
@@ -39,7 +18,7 @@ const reactionSchema = new Schema(
     }
   );
 
-// Initialize our Reaction model
+// Initialize Reaction model
 const Reaction = mongoose.model('Reaction', reactionSchema);
 
 const handleError = (err) => console.error(err);

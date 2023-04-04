@@ -1,2 +1,5 @@
-const { Reaction } = require('../models');
+const Reaction = require('../models/Reaction');
 
+module.exports = {
+    
+}
