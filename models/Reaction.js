@@ -22,7 +22,7 @@ const reactionSchema = new Schema(
   );
 
 // Initialize Reaction model
-const Reaction = mongoose.model('Reaction', reactionSchema);
+const Reaction = model('Reaction', reactionSchema);
 
 const handleError = (err) => console.error(err);
 
