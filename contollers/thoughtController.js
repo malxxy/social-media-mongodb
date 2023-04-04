@@ -10,12 +10,23 @@ module.exports = {
     },
     // get single thought with id
     getSingleThought(req, res) {
-        // code
+        Thought.findOne({ _id: req.params.thoughtId })
+        .populate('thoughts')
+        .then((user) =>
+          !user
+            ? res.status(404).json({ message: 'No user found' })
+            : res.json(user)
+        )
+        .catch((err) => res.status(500).json(err));
     },
     // post to create a new thought
     createThought(req,res) {
-        Thought.create(req.body)
-        // don't forget to push the created thought's _id to the associated user's thoughts array field
+        Thought.create(
+            {thoughtText: req.body.thoughtText},
+            {username: req.body.username}
+          )
+            .then((thought) => res.json(thought))
+            .catch((err) => res.status(500).json(err));
     },
     // put route to update a thought by id
     updateThought(req,res) {
@@ -28,10 +39,15 @@ module.exports = {
 
     // delete to remove a thought by its id
     deleteThought(req,res) {
-        Thought.findOneAndDelete(
-            { _id: req.params._id },
+        Thought.findOneAndDelete({ _id: req.params._id },
         )
-    },
+            .then((thought) =>
+              !thought
+                ? res.status(404).json({ message: 'No user with that ID' })
+                : res.status(200).json(thought, { message: 'User and all thoughts deleted'})
+            )
+            .catch((err) => res.status(500).json(err));
+          },
 
     // api/thoughts/:thoughtId/reactions
     addReaction(req,res) {
