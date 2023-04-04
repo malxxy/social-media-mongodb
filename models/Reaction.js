@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const Tag = require('./Tag');
 
 // reactionID
 // use mongoose objectId data type
