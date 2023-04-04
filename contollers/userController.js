@@ -11,7 +11,6 @@ module.exports = {
   // get single user by id
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
-      .select('-__v')
       .populate('thoughts')
       .then((user) =>
         !user
@@ -23,7 +22,10 @@ module.exports = {
 
   // create a new user
   createUser(req, res) {
-    User.create(req.body)
+    User.create(
+      {username: req.body.username},
+      {email: req.body.email}
+    )
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
@@ -31,14 +33,23 @@ module.exports = {
   // update a user by  id 
   updateUser(req,res) {
     User.findOneAndUpdate(
-      { _id: req.params.userId }
+      { _id: req.params.userId },
+      {username: req.body.username},
+      {email: req.body.email}
     ) 
+          .then((dbUserData) => res.json(dbUserData))
+      .catch((err) => res.status(500).json(err));
   },
 
   // delete a user by id
   deleteUser(req, res) {
-    User.findOneAndDelete(
-      { _id: req.params._id },
+    User.findOneAndDelete({ _id: req.params._id },
     )
+    .then((user) =>
+      !user
+        ? res.status(404).json({ message: 'No user with that ID' })
+        : Thought.deleteMany({ _id: { $in: user.thoughts }, message: 'User and all thoughts deleted'})
+    )
+    .catch((err) => res.status(500).json(err));
   },
 };
