@@ -32,9 +32,11 @@ module.exports = {
     updateThought(req,res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $set: req.body },
+            req.body,
             { runValidators: true, new: true }
           )
+          .then((thought) => res.json(thought))
+          .catch((err) => res.status(500).json(err));
     },
 
     // delete to remove a thought by its id
@@ -43,8 +45,8 @@ module.exports = {
         )
             .then((thought) =>
               !thought
-                ? res.status(404).json({ message: 'No user with that ID' })
-                : res.status(200).json(thought, { message: 'User and all thoughts deleted'})
+                ? res.status(404).json({ message: 'No thought with that ID' })
+                : res.status(200).json(thought, { message: 'thought deleted'})
             )
             .catch((err) => res.status(500).json(err));
           },

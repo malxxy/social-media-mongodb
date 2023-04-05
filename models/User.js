@@ -1,6 +1,3 @@
-// email
-// must match a valid email adress
-
 const { Schema, model } = require('mongoose');
 const Thought = require('./Thought');
 
