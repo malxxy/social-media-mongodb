@@ -60,15 +60,20 @@ module.exports = {
         // new true grabs the new data to return
         )
         .then((thought) => res.json(thought))
-          .catch((err) => res.status(500).json(err)); 
+        .catch((err) => res.status(500).json(err)); 
     },
     
     deleteReaction(req,res) {
         // delete  to pull and remove a reaction by reaction's reaction Id value
         Thought.findOneAndDelete(
             { _id: req.params.thoughtId },
-            { $pull: {reactions: {reactionId: req.params.reactionId}},
-            { runValidators: true, } // validate that  body has all aspects of reaction schema
+            { $pull: {reactions: {reactionId: req.params.reactionId}}},
         )
+        .then((reaction) =>
+        !reaction
+          ? res.status(404).json({ message: 'No reaction with that ID' })
+          : res.status(200).json(reaction, { message: 'reaction deleted'})
+      )
+      .catch((err) => res.status(500).json(err));
     }
-}
+} 
