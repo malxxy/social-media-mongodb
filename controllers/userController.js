@@ -22,10 +22,7 @@ module.exports = {
 
   // create a new user
   createUser(req, res) {
-    User.create(
-      {username: req.body.username},
-      {email: req.body.email}
-    )
+    User.create(req.body)
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
@@ -33,9 +30,9 @@ module.exports = {
   // update a user by  id 
   updateUser(req, res) {
     User.findOneAndUpdate(
-      { _id: req.params.userId },
-      {username: req.body.username},
-      {email: req.body.email}
+      { _id: req.params.id },
+      { $set: req.body},
+      { runValidators: true, new: true }
     ) 
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
@@ -43,7 +40,7 @@ module.exports = {
 
   // delete a user by id
   deleteUser(req, res) {
-    User.findOneAndDelete({ _id: req.params._id },
+    User.findOneAndDelete({ _id: req.params.id },
     )
     .then((user) =>
       !user
