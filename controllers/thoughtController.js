@@ -1,5 +1,4 @@
 const Thought = require('../models/Thought');
-const Reaction = require('../models/Reaction');
 
 module.exports = {
     // get all thoughts
@@ -54,13 +53,22 @@ module.exports = {
     // api/thoughts/:thoughtId/reactions
     addReaction(req,res) {
         // post to create a reaction stored in single thought array 
-       Reaction.create(req.body)
+       Thought.findOneAndUpdate(
+        { _id: req.params._id },
+        { $addToSet: {reactions: req.body}},
+        { runValidators: true, new: true} // validate that  body has all aspects of reaction schema
+        // new true grabs the new data to return
+        )
+        .then((thought) => res.json(thought))
+          .catch((err) => res.status(500).json(err)); 
     },
     
     deleteReaction(req,res) {
         // delete  to pull and remove a reaction by reaction's reaction Id value
-        Reaction.findOneAndDelete(
+        Thought.findOneAndDelete(
             { _id: req.params.thoughtId },
+            { $pull: {reactions: {reactionId: req.params.reactionId}},
+            { runValidators: true, } // validate that  body has all aspects of reaction schema
         )
     }
 }
