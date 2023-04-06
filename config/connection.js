@@ -1,6 +1,6 @@
 const mongoose = require('mongoose'); //require mongoose package
 
-mongoose.connect('mongodb://localhost:30001/socialmediaDB', {
+mongoose.connect('mongodb://127.0.0.1:27017/socialmediaDB', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });

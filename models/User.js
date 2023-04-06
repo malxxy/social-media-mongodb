@@ -16,8 +16,6 @@ const userSchema = new Schema(
     id: false,
   }
   );
-  
-// userSchema.set(option, value); // strictQuery error work around
 
  // virutal called friendCount that retrieves the length of the users friends array
 userSchema  
