@@ -19,4 +19,6 @@ const reactionSchema = new Schema(
     }
   );
 
+// reactionSchema.set(option, value); // strictQuery error work around
+
 module.exports = reactionSchema;

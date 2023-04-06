@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Thought = require('./Thought');
+// const Thought = require('./Thought');
 
 // Schema to create User model
 const userSchema = new Schema(
@@ -17,6 +17,8 @@ const userSchema = new Schema(
   }
   );
   
+// userSchema.set(option, value); // strictQuery error work around
+
  // virutal called friendCount that retrieves the length of the users friends array
 userSchema  
   .virtual('getFriends')

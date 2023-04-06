@@ -18,6 +18,8 @@ const thoughtSchema = new Schema(
   }
   );
   
+// thoughtSchema.set(option, value); // strictQuery error work around
+  
 // virtual reactionCount that retrieves the thoughts reactions array field on query
 thoughtSchema
   .virtual('getReactions')
