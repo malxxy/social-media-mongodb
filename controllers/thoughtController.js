@@ -10,24 +10,26 @@ module.exports = {
         .then((thought) => res.json(thought))
         .catch((err) => res.status(500).json(err));
     },
+
     // get single thought with id
     getSingleThought(req, res) {
         Thought.findOne({ _id: req.params.thoughtId })
         .populate({path: 'reactions',select: '-__v'})
         .select('-__v')
         .then((thought) =>
-          !user
-            ? res.status(404).json({ message: 'No thought found' })
+          !thought
+            ? res.status(404).json({ message: 'No thought with that ID found' })
             : res.json(thought)
         )
         .catch((err) => res.status(500).json(err));
     },
+
     // post to create a new thought
     createThought(req,res) {
         Thought.create(req.body)
         .then(({_id}) => {
           return User.findOneAndUpdate(
-            { _id: params.userId}, 
+            { _id: req.params.userId}, 
             {$push: {thoughts: _id}}, 
             {runValidators: true, new: true});
         })
