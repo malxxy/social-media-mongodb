@@ -33,7 +33,13 @@ module.exports = {
             {$push: {thoughts: _id}}, 
             {runValidators: true, new: true});
         })
+        .then(() => {
+          res.json({ messsage: "Thought added!"})
+        })
         .catch((err) => res.status(500).json(err));
+        // User.create(req.body)
+        // .then((dbUserData) => res.json(dbUserData))
+        // .catch((err) => res.status(500).json(err));
     },
 
     // put route to update a thought by id
