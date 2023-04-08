@@ -24,7 +24,7 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
 
-    // post to create a new thought
+    // post to create a new thought (DONE)
     createThought(req,res) {
         Thought.create(req.body)
         .then(({_id}) => {
@@ -37,9 +37,6 @@ module.exports = {
           res.json({ messsage: "Thought added!"})
         })
         .catch((err) => res.status(500).json(err));
-        // User.create(req.body)
-        // .then((dbUserData) => res.json(dbUserData))
-        // .catch((err) => res.status(500).json(err));
     },
 
     // put route to update a thought by id
@@ -55,11 +52,11 @@ module.exports = {
 
     // delete to remove a thought by its id
     deleteThought(req,res) {
-        Thought.findOneAndDelete({ _id: req.params._id })
+        Thought.findOneAndDelete({ _id: req.params.thoughtId })
         .then((thought) =>
               !thought
                 ? res.status(404).json({ message: 'No thought with that ID' })
-                : res.status(200).json(thought, { message: 'thought deleted'}))
+                : res.status(200).json(thought, { message: 'Thought deleted!'}))
         .catch((err) => res.status(500).json(err));
       },
 
