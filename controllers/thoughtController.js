@@ -64,7 +64,7 @@ module.exports = {
     addReaction(req,res) {
         // post to create a reaction stored in single thought array 
        Thought.findOneAndUpdate(
-        { _id: req.params._id },
+        { _id: req.params.thoughtId },
         { $addToSet: {reactions: req.body}},
         { runValidators: true, new: true} // validate that  body has all aspects of reaction schema
         // new true grabs the new data to return
