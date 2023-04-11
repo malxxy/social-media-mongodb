@@ -27,7 +27,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // update a user by id NOT WORKING
+  // update a user by id DONE
   updateUser(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
