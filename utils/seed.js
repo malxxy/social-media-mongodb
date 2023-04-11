@@ -1,5 +1,5 @@
 const connection = require('../config/connection');
-const { User, Thought, Reaction } = require('../models');
+const { User, Thought } = require('../models');
 
 connection.on('error', (err) => err);
 
@@ -7,7 +7,7 @@ connection.once('open', async () => {
   console.log('connected');
   await User.deleteMany({});
   await Thought.deleteMany({});
-  await Reaction.deleteMany({});
+  // await Reaction.deleteMany({});
 
   const users = [];
   const thoughts = [];
@@ -15,7 +15,7 @@ connection.once('open', async () => {
 
   await User.collection.insertMany(users);
   await Thought.collection.insertMany(thoughts);
-  await Reaction.collection.insertMany(reactions);
+  // await Reaction.collection.insertMany(reactions);
 
   // loop through the saved applications, for each application we need to generate a application response and insert the application responses
   console.table(users);
