@@ -42,15 +42,16 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // delete a user by id NOT WORKING (working but giving error?)
-  deleteUser(req, res) {
-    User.findOneAndDelete({ _id: req.params.userId },
-    )
-    .then((user) =>
-      !user
-        ? res.status(404).json({ message: 'No user with that ID' })
-        : Thought.deleteMany({ _id: { $in: user.thoughts.thoughtId }, message: 'User and all thoughts deleted'})
-    )
+  // delete a user by id
+deleteUser(req, res) {
+  User.findOneAndDelete({ _id: req.params.userId })
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ message: 'No user with that ID' });
+      }
+      // if the user was successfully deleted, return a success message
+      res.json({ message: 'User deleted' });
+    })
     .catch((err) => res.status(500).json(err));
   },
 };

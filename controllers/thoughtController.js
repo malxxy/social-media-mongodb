@@ -50,13 +50,16 @@ module.exports = {
           .catch((err) => res.status(500).json(err));
     },
 
-    // delete to remove a thought by its id DONE but getting 500 error.
-    deleteThought(req,res) {
-        Thought.findOneAndDelete({ _id: req.params.thoughtId })
-        .then((thought) =>
-              !thought
-                ? res.status(404).json({ message: 'No thought with that ID' })
-                : res.status(200).json(thought, { message: 'Thought deleted!'}))
+    // delete to remove a thought by its id DONE
+    deleteThought(req, res) {
+      Thought.findOneAndDelete({ _id: req.params.thoughtId })
+        .then((thought) => {
+          if (!thought) {
+            return res.status(404).json({ message: 'No thought with that ID' });
+          }
+          // if the user was successfully deleted, return a success message
+          res.json({ message: 'Thought deleted' });
+        })
         .catch((err) => res.status(500).json(err));
       },
 
@@ -80,11 +83,13 @@ module.exports = {
             { _id: req.params.thoughtId },
             { $pull: {reactions: {reactionId: req.params.reactionId}}},
         )
-        .then((reaction) =>
-        !reaction
-          ? res.status(404).json({ message: 'No reaction with that ID' })
-          : res.status(200).json(reaction, { message: 'reaction deleted'})
-      )
+      .then((reaction) => {
+        if (!reaction) {
+          return res.status(404).json({ message: 'No reaction with that ID' });
+        }
+        // if the user was successfully deleted, return a success message
+        res.json({ message: 'Reaction deleted' });
+      })
       .catch((err) => res.status(500).json(err));
     }
-} 
+};
