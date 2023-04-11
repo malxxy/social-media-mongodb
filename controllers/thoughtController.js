@@ -2,7 +2,7 @@ const Thought = require('../models/Thought');
 const User = require('../models/User');
 
 module.exports = {
-    // get all thoughts
+    // get all thoughts DONE
     getThoughts(req, res) {
         Thought.find()
         .populate({path: 'reactions', select: '-__v'})
@@ -11,7 +11,7 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
 
-    // get single thought with id
+    // get single thought with id DONE
     getSingleThought(req, res) {
         Thought.findOne({ _id: req.params.thoughtId })
         .populate({path: 'reactions',select: '-__v'})
@@ -24,7 +24,7 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
 
-    // post to create a new thought (DONE)
+    // post to create a new thought DONE
     createThought(req,res) {
         Thought.create(req.body)
         .then(({_id}) => {
@@ -39,7 +39,7 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
     },
 
-    // put route to update a thought by id
+    // put route to update a thought by id DONE
     updateThought(req,res) {
         Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
@@ -50,7 +50,7 @@ module.exports = {
           .catch((err) => res.status(500).json(err));
     },
 
-    // delete to remove a thought by its id
+    // delete to remove a thought by its id DONE but getting 500 error.
     deleteThought(req,res) {
         Thought.findOneAndDelete({ _id: req.params.thoughtId })
         .then((thought) =>

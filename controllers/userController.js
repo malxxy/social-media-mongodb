@@ -27,7 +27,7 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // update a user by id 
+  // update a user by id NOT WORKING
   updateUser(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
@@ -42,14 +42,14 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // delete a user by id
+  // delete a user by id NOT WORKING (working but giving error?)
   deleteUser(req, res) {
     User.findOneAndDelete({ _id: req.params.userId },
     )
     .then((user) =>
       !user
         ? res.status(404).json({ message: 'No user with that ID' })
-        : Thought.deleteMany({ _id: { $in: user.thoughts }, message: 'User and all thoughts deleted'})
+        : Thought.deleteMany({ _id: { $in: user.thoughts.thoughtId }, message: 'User and all thoughts deleted'})
     )
     .catch((err) => res.status(500).json(err));
   },
