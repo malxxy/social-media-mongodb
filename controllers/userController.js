@@ -1,14 +1,14 @@
 const User = require('../models/User');
 
 module.exports = {
-  // get all users
+  // get all users DONE
   getUsers(req, res) {
     User.find()
       .then((users) => res.json(users))
       .catch((err) => res.status(500).json(err));
   },
 
-  // get single user by id
+  // get single user by id DONE
   getSingleUser(req, res) {
     User.findOne({ _id: req.params.userId })
       // .populate('thoughts')
@@ -20,21 +20,25 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
 
-  // create a new user
+  // create a new user DONE
   createUser(req, res) {
     User.create(req.body)
       .then((dbUserData) => res.json(dbUserData))
       .catch((err) => res.status(500).json(err));
   },
 
-  // update a user by  id 
+  // update a user by id 
   updateUser(req, res) {
     User.findOneAndUpdate(
       { _id: req.params.userId },
       { $set: req.body},
       { runValidators: true, new: true }
     ) 
-      .then((dbUserData) => res.json(dbUserData))
+      .then((user) =>
+        !user
+          ? res.status(404).json({ message: 'No user with that ID' })
+          : res.json(user)
+      )
       .catch((err) => res.status(500).json(err));
   },
 
