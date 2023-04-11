@@ -60,7 +60,7 @@ module.exports = {
         .catch((err) => res.status(500).json(err));
       },
 
-    // api/thoughts/:thoughtId/reactions
+    // api/thoughts/:thoughtId/reactions DONE
     addReaction(req,res) {
         // post to create a reaction stored in single thought array 
        Thought.findOneAndUpdate(
@@ -72,7 +72,8 @@ module.exports = {
         .then((thought) => res.json(thought))
         .catch((err) => res.status(500).json(err)); 
     },
-    
+
+    // api/thoughts/:thoughtId/reactions/:reactionId DONE but getting 500 error.
     deleteReaction(req,res) {
         // delete  to pull and remove a reaction by reaction's reaction Id value
         Thought.findOneAndDelete(
