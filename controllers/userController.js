@@ -10,8 +10,8 @@ module.exports = {
 
   // get single user by id
   getSingleUser(req, res) {
-    User.findOne({ _id: req.params.id })
-      .populate('thoughts')
+    User.findOne({ _id: req.params.userId })
+      // .populate('thoughts')
       .then((user) =>
         !user
           ? res.status(404).json({ message: 'No user found' })
@@ -30,7 +30,7 @@ module.exports = {
   // update a user by  id 
   updateUser(req, res) {
     User.findOneAndUpdate(
-      { _id: req.params.id },
+      { _id: req.params.userId },
       { $set: req.body},
       { runValidators: true, new: true }
     ) 
@@ -40,7 +40,7 @@ module.exports = {
 
   // delete a user by id
   deleteUser(req, res) {
-    User.findOneAndDelete({ _id: req.params.id },
+    User.findOneAndDelete({ _id: req.params.userId },
     )
     .then((user) =>
       !user
